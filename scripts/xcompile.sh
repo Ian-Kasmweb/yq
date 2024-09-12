@@ -15,12 +15,6 @@ cd build
 # Remove artifacts from goreleaser
 rm artifacts.json config.yaml metadata.json
 
-rm yq_windows_386.exe.tar.gz
-rm yq_windows_amd64.exe.tar.gz
-
-zip yq_windows_386.zip yq_windows_386.exe
-zip yq_windows_amd64.zip yq_windows_amd64.exe
-
 
 rhash -r -a . -o checksums
 
