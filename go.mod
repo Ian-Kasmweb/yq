@@ -29,4 +29,4 @@ require (
 	golang.org/x/sys v0.29.0 // indirect
 )
 
-go 1.23.0
+go 1.23.7
