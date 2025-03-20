@@ -22,6 +22,17 @@ var sortByOperatorScenarios = []expressionScenario{
 		},
 	},
 	{
+		description: "Sort by with null",
+		skipDoc:     true,
+		document:    "[{a: banana},null,{a: apple}]",
+		expression:  `sort_by(.a)[]`,
+		expected: []string{
+			"D0, P[1], (!!null)::null\n",
+			"D0, P[2], (!!map)::{a: apple}\n",
+			"D0, P[0], (!!map)::{a: banana}\n",
+		},
+	},
+	{
 		description: "Sort by multiple fields",
 		document:    "[{a: dog},{a: cat, b: banana},{a: cat, b: apple}]",
 		expression:  `sort_by(.a, .b)`,
@@ -71,6 +82,24 @@ var sortByOperatorScenarios = []expressionScenario{
 		expression:     `.cool |= sort_by(keys | .[0])`,
 		expected: []string{
 			"D0, P[], (!!map)::cool: [{a: banana}, {b: banana}, {c: banana}]\n",
+		},
+	},
+	{
+		description:    "Sort a map",
+		subdescription: "Sorting a map, by default this will sort by the values",
+		document:       "y: b\nz: a\nx: c\n",
+		expression:     `sort`,
+		expected: []string{
+			"D0, P[], (!!map)::z: a\ny: b\nx: c\n",
+		},
+	},
+	{
+		description:    "Sort a map by keys",
+		subdescription: "Use sort_by to sort a map using a custom function",
+		document:       "Y: b\nz: a\nx: c\n",
+		expression:     `sort_by(key | downcase)`,
+		expected: []string{
+			"D0, P[], (!!map)::x: c\nY: b\nz: a\n",
 		},
 	},
 	{
